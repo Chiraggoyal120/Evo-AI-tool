@@ -1,0 +1,74 @@
+{
+  "test_cases": [
+    {
+      "id": "product_search_with_constraints",
+      "input": "Wedding guest, midi, under $120 — I'm between M/L. ETA to 560001?",
+      "expected_intent": "product_assist",
+      "expected_tools": ["product_search", "size_recommender", "eta"],
+      "expected_products": ["P1", "P2"],
+      "expected_eta": "4-5 business days"
+    },
+    {
+      "id": "successful_cancellation",
+      "input": "Cancel order A1003 — email mira@example.com.",
+      "expected_intent": "order_help", 
+      "expected_tools": ["order_lookup", "order_cancel"],
+      "expected_policy": {"cancel_allowed": true},
+      "expected_outcome": "success"
+    },
+    {
+      "id": "blocked_cancellation",
+      "input": "Cancel order A1002 — email alex@example.com.",
+      "expected_intent": "order_help",
+      "expected_tools": ["order_lookup", "order_cancel"], 
+      "expected_policy": {"cancel_allowed": false},
+      "expected_outcome": "policy_blocked"
+    },
+    {
+      "id": "invalid_discount_request",
+      "input": "Can you give me a discount code that doesn't exist?",
+      "expected_intent": "other",
+      "expected_tools": [],
+      "expected_response_contains": ["can't provide", "first-time customers"]
+    },
+    {
+      "id": "store_policy_query",
+      "input": "What's your return policy?",
+      "expected_intent": "store_info",
+      "expected_response_contains": ["30-day return", "unworn items"]
+    },
+    {
+      "id": "shipping_inquiry",
+      "input": "How long does shipping take?",
+      "expected_intent": "store_info", 
+      "expected_response_contains": ["4-7 business days", "$5.99"]
+    },
+    {
+      "id": "size_help_request", 
+      "input": "What size should I get for a party dress?",
+      "expected_intent": "product_assist",
+      "expected_tools": ["size_recommender"],
+      "expected_response_contains": ["size", "recommend"]
+    },
+    {
+      "id": "unavailable_product",
+      "input": "Do you have any blue dresses?",
+      "expected_intent": "product_assist",
+      "expected_tools": ["product_search"],
+      "expected_response_contains": ["don't currently have", "other colors"]
+    },
+    {
+      "id": "order_status_check",
+      "input": "What's the status of order A1001? Email rehan@example.com",
+      "expected_intent": "order_help",
+      "expected_tools": ["order_lookup", "get_order_status"],
+      "expected_response_contains": ["delivered"]
+    },
+    {
+      "id": "greeting",
+      "input": "Hello, how can you help me?",
+      "expected_intent": "other",
+      "expected_response_contains": ["EvoAI Fashion Assistant", "help you"]
+    }
+  ]
+}
